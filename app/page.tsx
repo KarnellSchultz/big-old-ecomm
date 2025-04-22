@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChevronRight, Award, Truck, CreditCard } from "lucide-react"
 import CategoryCard from "@/components/category-card"
@@ -25,10 +26,13 @@ export default function Home() {
             </div>
             <div className="relative h-64 md:h-auto">
               <div className="absolute inset-0 bg-black/20 rounded-lg"></div>
-              <img
-                src="/placeholder.svg?height=400&width=600"
+              <Image
+                src="https://www.xxl.se/content/images/4c10a7f2b654d058c9d396c4ee33e5c6a8e586c2-7869x5246.jpg?bgcolor=efefef&auto=format&fit=fill&h=610&w=1080&q=75"
                 alt="Sports Equipment"
+                width={1080}
+                height={610}
                 className="w-full h-full object-cover rounded-lg"
+                priority
               />
             </div>
           </div>
