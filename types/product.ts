@@ -19,6 +19,9 @@ export interface Product {
   inStock?: boolean
   summary?: string
   baseColor?: string
+  description?: string
+  images?: string[]
+  variants?: any[]
 }
 
 export interface ApiProduct {
