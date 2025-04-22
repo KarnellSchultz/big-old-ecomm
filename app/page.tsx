@@ -21,9 +21,6 @@ export default function Home() {
                 <Button asChild size="lg" className="bg-white text-green-800 hover:bg-gray-100">
                   <Link href="/products">Shop Now</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                  <Link href="/categories">Browse Categories</Link>
-                </Button>
               </div>
             </div>
             <div className="relative h-64 md:h-auto">

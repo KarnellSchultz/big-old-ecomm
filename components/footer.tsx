@@ -46,11 +46,7 @@ export default function Footer() {
                   Products
                 </Link>
               </li>
-              <li>
-                <Link href="/categories" className="text-gray-400 hover:text-white">
-                  Categories
-                </Link>
-              </li>
+
               <li>
                 <Link href="/deals" className="text-gray-400 hover:text-white">
                   Deals
@@ -69,42 +65,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Categories */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Categories</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/categories/basketball" className="text-gray-400 hover:text-white">
-                  Basketball
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/football" className="text-gray-400 hover:text-white">
-                  Football
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/running" className="text-gray-400 hover:text-white">
-                  Running
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/tennis" className="text-gray-400 hover:text-white">
-                  Tennis
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/golf" className="text-gray-400 hover:text-white">
-                  Golf
-                </Link>
-              </li>
-              <li>
-                <Link href="/categories/swimming" className="text-gray-400 hover:text-white">
-                  Swimming
-                </Link>
-              </li>
-            </ul>
-          </div>
 
           {/* Contact */}
           <div>

@@ -18,15 +18,6 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/context/cart-context"
 
-// Update the categories array to use the new dynamic routes
-const categories = [
-  { name: "Basketball", href: "/categories/basketball" },
-  { name: "Football", href: "/categories/football" },
-  { name: "Running", href: "/categories/running" },
-  { name: "Tennis", href: "/categories/tennis" },
-  { name: "Golf", href: "/categories/golf" },
-  { name: "Swimming", href: "/categories/swimming" },
-]
 
 export default function Navbar() {
   const [showSearch, setShowSearch] = useState(false)
@@ -58,20 +49,6 @@ export default function Navbar() {
             >
               Home
             </Link>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="link" className="p-0 h-auto font-medium">
-                  Categories <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.name} asChild>
-                    <Link href={category.href}>{category.name}</Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
 
             <Link
               href="/products"
@@ -201,20 +178,7 @@ export default function Navbar() {
                   <Link href="/" className="text-lg font-medium transition-colors hover:text-green-600">
                     Home
                   </Link>
-                  <div className="space-y-3">
-                    <p className="text-lg font-medium">Categories</p>
-                    <div className="pl-4 space-y-2">
-                      {categories.map((category) => (
-                        <Link
-                          key={category.name}
-                          href={category.href}
-                          className="block text-base transition-colors hover:text-green-600"
-                        >
-                          {category.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+
                   <Link href="/products" className="text-lg font-medium transition-colors hover:text-green-600">
                     All Products
                   </Link>
