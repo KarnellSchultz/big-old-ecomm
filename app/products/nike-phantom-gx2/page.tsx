@@ -3,18 +3,24 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ShoppingCart, Heart, Share2, Truck, RotateCcw, ShieldCheck, Star } from "lucide-react"
+import { ShoppingCart, Heart, Share2, Truck, RotateCcw, ShieldCheck, Star, AlertCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import ProductCard from "@/components/product-card"
+import { useCart } from "@/context/cart-context"
+import { toast } from "@/components/ui/use-toast"
 
 export default function NikePhantomPage() {
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState("")
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [mainImage, setMainImage] = useState(0)
+  const [sizeError, setSizeError] = useState(false)
+
+  // Get cart functions from context
+  const { addItem } = useCart()
 
   // Product data from the provided JSON
   const product = {
@@ -112,6 +118,34 @@ export default function NikePhantomPage() {
   const incrementQuantity = () => setQuantity((prev) => prev + 1)
   const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
 
+  // Handle add to cart
+  const handleAddToCart = () => {
+    // Validate that a size is selected
+    if (!selectedSize) {
+      setSizeError(true)
+      toast({
+        title: "Please select a size",
+        description: "You must select a size before adding to cart",
+        variant: "destructive",
+      })
+      return
+    }
+
+    // Reset size error if it was previously shown
+    setSizeError(false)
+
+    // Add the item to the cart
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0],
+      quantity: quantity,
+      size: selectedSize,
+      color: product.color,
+    })
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -174,16 +208,29 @@ export default function NikePhantomPage() {
 
             <Separator className="my-6" />
 
-            {/* Product Options */}
+            {/* Size Selection with Error State */}
             <div className="mb-6">
-              <h3 className="font-semibold mb-2">Size</h3>
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-semibold">Size</h3>
+                {sizeError && (
+                  <span className="text-sm text-red-500 flex items-center">
+                    <AlertCircle className="h-4 w-4 mr-1" /> Please select a size
+                  </span>
+                )}
+              </div>
               <div className="grid grid-cols-3 gap-2">
                 {product.sizes.map((sizeOption) => (
                   <Button
                     key={sizeOption.size}
                     variant={selectedSize === sizeOption.size ? "default" : "outline"}
-                    className={selectedSize === sizeOption.size ? "bg-green-600 hover:bg-green-700" : ""}
-                    onClick={() => setSelectedSize(sizeOption.size)}
+                    className={cn(
+                      selectedSize === sizeOption.size ? "bg-green-600 hover:bg-green-700" : "",
+                      sizeError && "border-red-500",
+                    )}
+                    onClick={() => {
+                      setSelectedSize(sizeOption.size)
+                      setSizeError(false)
+                    }}
                   >
                     {sizeOption.size}
                   </Button>
@@ -212,7 +259,7 @@ export default function NikePhantomPage() {
 
             {/* Add to Cart */}
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <Button className="flex-1 bg-green-600 hover:bg-green-700">
+              <Button className="flex-1 bg-green-600 hover:bg-green-700" onClick={handleAddToCart}>
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart
               </Button>

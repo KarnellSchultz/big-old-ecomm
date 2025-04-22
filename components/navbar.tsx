@@ -16,6 +16,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { useCart } from "@/context/cart-context"
 
 // Update the categories array to use the new dynamic routes
 const categories = [
@@ -30,9 +31,10 @@ const categories = [
 export default function Navbar() {
   const [showSearch, setShowSearch] = useState(false)
   const pathname = usePathname()
+  const { getCartCount } = useCart()
 
-  // This would come from a cart state/context in a real app
-  const cartItemCount = 2
+  // Get cart count from context
+  const cartItemCount = getCartCount()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
@@ -70,6 +72,7 @@ export default function Navbar() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+
             <Link
               href="/products"
               className={cn(
@@ -78,6 +81,15 @@ export default function Navbar() {
               )}
             >
               All Products
+            </Link>
+            <Link
+              href="/products/api-products"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-green-600",
+                pathname === "/products/api-products" ? "text-green-600" : "text-gray-700",
+              )}
+            >
+              Featured Products
             </Link>
             <Link
               href="/deals"
@@ -205,6 +217,12 @@ export default function Navbar() {
                   </div>
                   <Link href="/products" className="text-lg font-medium transition-colors hover:text-green-600">
                     All Products
+                  </Link>
+                  <Link
+                    href="/products/api-products"
+                    className="text-lg font-medium transition-colors hover:text-green-600"
+                  >
+                    Featured Products
                   </Link>
                   <Link href="/deals" className="text-lg font-medium transition-colors hover:text-green-600">
                     Deals
