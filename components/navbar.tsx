@@ -34,7 +34,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-green-600">SportsPro</span>
+              <span className="text-xl font-bold text-blue-600">SportsPro</span>
             </Link>
           </div>
 
@@ -43,8 +43,8 @@ export default function Navbar() {
             <Link
               href="/"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/" ? "text-blue-600" : "text-gray-700",
               )}
             >
               Home
@@ -53,8 +53,8 @@ export default function Navbar() {
             <Link
               href="/products"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/products" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/products" ? "text-blue-600" : "text-gray-700",
               )}
             >
               All Products
@@ -62,8 +62,8 @@ export default function Navbar() {
             <Link
               href="/products/api-products"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/products/api-products" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/products/api-products" ? "text-blue-600" : "text-gray-700",
               )}
             >
               Featured Products
@@ -71,8 +71,8 @@ export default function Navbar() {
             <Link
               href="/deals"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/deals" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/deals" ? "text-blue-600" : "text-gray-700",
               )}
             >
               Deals
@@ -80,8 +80,8 @@ export default function Navbar() {
             <Link
               href="/about"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/about" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/about" ? "text-blue-600" : "text-gray-700",
               )}
             >
               About
@@ -89,8 +89,8 @@ export default function Navbar() {
             <Link
               href="/contact"
               className={cn(
-                "text-sm font-medium transition-colors hover:text-green-600",
-                pathname === "/contact" ? "text-green-600" : "text-gray-700",
+                "text-sm font-medium transition-colors hover:text-blue-600",
+                pathname === "/contact" ? "text-blue-600" : "text-gray-700",
               )}
             >
               Contact
@@ -154,7 +154,7 @@ export default function Navbar() {
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-green-600">
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-blue-600">
                     {cartItemCount}
                   </Badge>
                 )}

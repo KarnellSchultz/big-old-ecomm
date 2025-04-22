@@ -7,39 +7,39 @@ export default function FeaturedProducts() {
   const featuredProducts = [
     {
       id: "1",
-      name: "Pro Basketball - Official Size",
-      price: 29.99,
-      originalPrice: 39.99,
+      name: "Sea-Doo Spark Trixx - 2024 Model",
+      price: 8999.99,
+      originalPrice: 9999.99,
       image: "/placeholder.svg?height=300&width=300",
-      category: "Basketball",
+      category: "Jet Skis",
       isNew: true,
-      rating: 4.5,
+      rating: 4.9,
     },
     {
       id: "2",
-      name: "Running Shoes - Lightweight Performance",
-      price: 89.99,
-      originalPrice: 119.99,
+      name: "Premium Life Jacket - Coast Guard Approved",
+      price: 129.99,
+      originalPrice: 159.99,
       image: "/placeholder.svg?height=300&width=300",
-      category: "Running",
+      category: "Safety Gear",
       isFeatured: true,
       rating: 4.8,
     },
     {
       id: "3",
-      name: "Tennis Racket - Professional Series",
-      price: 149.99,
+      name: "Waterproof Action Camera Mount",
+      price: 49.99,
       image: "/placeholder.svg?height=300&width=300",
-      category: "Tennis",
+      category: "Accessories",
       rating: 4.7,
     },
     {
       id: "4",
-      name: "Football - Competition Grade",
-      price: 34.99,
-      originalPrice: 44.99,
+      name: "Performance Spark Plugs - 4 Pack",
+      price: 89.99,
+      originalPrice: 109.99,
       image: "/placeholder.svg?height=300&width=300",
-      category: "Football",
+      category: "Parts",
       rating: 4.6,
     },
   ]
@@ -49,7 +49,7 @@ export default function FeaturedProducts() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Featured Products</h2>
-          <Link href="/products" className="text-green-600 hover:text-green-700 flex items-center">
+          <Link href="/products" className="text-blue-600 hover:text-blue-700 flex items-center">
             View All <ChevronRight className="h-4 w-4 ml-1" />
           </Link>
         </div>

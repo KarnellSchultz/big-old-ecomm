@@ -58,7 +58,7 @@ export default function ProductCard({
         >
           <Heart className={cn("h-5 w-5", isWishlisted && "fill-current")} />
         </Button>
-        {isNew && <Badge className="absolute top-2 left-2 bg-green-600 hover:bg-green-700">New</Badge>}
+        {isNew && <Badge className="absolute top-2 left-2 bg-blue-600 hover:bg-blue-700">New</Badge>}
         {discount > 0 && (
           <Badge className="absolute bottom-2 left-2 bg-red-600 hover:bg-red-700">{discount}% OFF</Badge>
         )}
@@ -80,7 +80,7 @@ export default function ProductCard({
         </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full bg-green-600 hover:bg-green-700">
+        <Button className="w-full bg-blue-600 hover:bg-blue-700">
           <ShoppingCart className="h-4 w-4 mr-2" />
           Add to Cart
         </Button>
