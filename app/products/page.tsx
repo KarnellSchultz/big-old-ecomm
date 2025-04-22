@@ -1,177 +1,26 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import ProductCard from "@/components/product-card"
-import { Search, SlidersHorizontal } from "lucide-react"
+import { Suspense } from "react"
+import { fetchProducts } from "@/app/actions/product-actions"
+import ProductList from "./product-list"
+import ProductListSkeleton from "./product-list-skeleton"
 
-export default function ProductsPage() {
-  // This would typically come from an API or database
-  const products = [
-    {
-      id: "1",
-      name: "Pro Basketball - Official Size",
-      price: 29.99,
-      originalPrice: 39.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Basketball",
-      isNew: true,
-      rating: 4.5,
-    },
-    {
-      id: "2",
-      name: "Running Shoes - Lightweight Performance",
-      price: 89.99,
-      originalPrice: 119.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Running",
-      isFeatured: true,
-      rating: 4.8,
-    },
-    {
-      id: "3",
-      name: "Tennis Racket - Professional Series",
-      price: 149.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Tennis",
-      rating: 4.7,
-    },
-    {
-      id: "4",
-      name: "Football - Competition Grade",
-      price: 34.99,
-      originalPrice: 44.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Football",
-      rating: 4.6,
-    },
-    {
-      id: "5",
-      name: "Basketball Hoop - Adjustable Height",
-      price: 199.99,
-      originalPrice: 249.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Basketball",
-      rating: 4.4,
-    },
-    {
-      id: "6",
-      name: "Running Shorts - Breathable Fabric",
-      price: 24.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Running",
-      isNew: true,
-      rating: 4.3,
-    },
-    {
-      id: "7",
-      name: "Tennis Balls - Pack of 3",
-      price: 9.99,
-      originalPrice: 12.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Tennis",
-      rating: 4.2,
-    },
-    {
-      id: "8",
-      name: "Football Cleats - Professional",
-      price: 79.99,
-      image: "/placeholder.svg?height=300&width=300",
-      category: "Football",
-      rating: 4.5,
-    },
-  ]
+export const metadata = {
+  title: "Featured Products | SportsPro",
+  description: "Browse our featured products and special offers",
+}
+
+export default async function ApiProductsPage() {
+  const apiUrl =
+    "https://wae24fd27.api.esales.apptus.cloud/api/storefront/v3/queries/landing-page?channels=ONLINE%7CSTORE&customerKey=103a309a-bcc8-4eae-a7f2-edd7a2550dcb&limit=34&sessionKey=6d459748-f912-4792-b657-7daa353adac3&site=xxl.se&skip=0&stores=528%7C530%7C518%7C504%7C503%7C524%7C515%7C510%7C522%7C514%7C508%7C517%7C526%7C525%7C513%7C529%7C507%7C502%7C516%7C501%7C511%7C523%7C527%7C509%7C519%7C506%7C512%7C521%7C505%7C520&touchpoint=DESKTOP&priceId=member&pageReference=%2Fc%2F100000&locale=sv-SE&market=SE&presentCustom=additionalSalesAccessories%7CadditionalSalesCrossSale%7CadditionalSalesServiceProducts%7CbaseColor%7Cbrand%7Cbreadcrumbs%7CbundledBy%7CbundleBestLeafPrice%7CbundleConfiguration%7Ccampaign%7CcampaignDisclaimerText%7CcampaignIcon%7CcampaignIds%7CcampaignMessage%7CcampaignMessageText%7CcampaignReward%7CcampaignRibbon%7CcampaignSellingPrice%7CcampaignSplash%7CcategoryBreadcrumbCodes%7CcategoryBreadcrumbNames%7CcategoryIds%7CccBuffer%7CcheapestPrice%7Cpim_mandatory_user_string%7Cclassifications%7Cconfigurations%7ChasPrimaryImage%7CisAmmunition%7CisDiscontinued%7CisExcludedFromClickAndCollect%7CisInStockOnline%7CisQuantityToggleEnabled%7CisReleased%7CisReturnable%7CisSoldIndividually%7CisUserSetting%7ClocalizedColorName%7CmemberPrice%7ConlyAvailableInStoreNoClickAndCollect%7ConlyAvailableInStoreNoClickAndCollectLowPrice%7CpackageQuantity%7Cpackage_weight%7CphotoshootModel%7CprimaryCategoryCode%7CproductFamilyProducts%7CproductLink%7CproductStatusCode%7CproductType%7CsalesMethodCode%7CsalesUnit%7Csummary%7Ctags%7CunitConversions%7CUNKNOWN%7Cusps%7Cvendor"
+
+  const products = await fetchProducts(apiUrl)
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold mb-8">All Products</h1>
+      <h1 className="text-3xl font-bold mb-8">Featured Products</h1>
 
-      {/* Search and Filter Bar */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="relative flex-grow">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <Input placeholder="Search products..." className="pl-10" />
-        </div>
-        <div className="flex gap-4">
-          <Select defaultValue="featured">
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="featured">Featured</SelectItem>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="price-low">Price: Low to High</SelectItem>
-              <SelectItem value="price-high">Price: High to Low</SelectItem>
-              <SelectItem value="best-rated">Best Rated</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline" className="flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4" />
-            Filters
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Filters Sidebar */}
-        <div className="hidden md:block space-y-8">
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Categories</h3>
-            <div className="space-y-2">
-              {["Basketball", "Football", "Running", "Tennis", "Golf", "Swimming"].map((category) => (
-                <div key={category} className="flex items-center space-x-2">
-                  <Checkbox id={`category-${category}`} />
-                  <Label htmlFor={`category-${category}`}>{category}</Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Price Range</h3>
-            <Slider defaultValue={[0, 200]} min={0} max={500} step={10} />
-            <div className="flex justify-between mt-2">
-              <span>$0</span>
-              <span>$500</span>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Brand</h3>
-            <div className="space-y-2">
-              {["Nike", "Adidas", "Under Armour", "Wilson", "Spalding"].map((brand) => (
-                <div key={brand} className="flex items-center space-x-2">
-                  <Checkbox id={`brand-${brand}`} />
-                  <Label htmlFor={`brand-${brand}`}>{brand}</Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Rating</h3>
-            <div className="space-y-2">
-              {[4, 3, 2, 1].map((rating) => (
-                <div key={rating} className="flex items-center space-x-2">
-                  <Checkbox id={`rating-${rating}`} />
-                  <Label htmlFor={`rating-${rating}`}>{rating}+ Stars</Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <Button className="w-full bg-green-600 hover:bg-green-700">Apply Filters</Button>
-        </div>
-
-        {/* Products Grid */}
-        <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
-      </div>
+      <Suspense fallback={<ProductListSkeleton />}>
+        <ProductList products={products} />
+      </Suspense>
     </div>
   )
 }

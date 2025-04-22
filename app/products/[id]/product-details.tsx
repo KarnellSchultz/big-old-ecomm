@@ -1,10 +1,12 @@
 "use client"
 
+import { addToCartAction } from "@/app/actions/product-actions"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
 import { Product } from "@/types/product"
 import { Heart, RotateCcw, Share2, ShieldCheck, ShoppingCart, Star, StarHalf, Truck } from "lucide-react"
@@ -14,14 +16,47 @@ interface ProductDetailsProps {
   product: Product
 }
 
+interface ProductVariant {
+  sizes?: string[]
+  colors?: string[]
+}
+
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState("")
   const [selectedColor, setSelectedColor] = useState("")
   const [isWishlisted, setIsWishlisted] = useState(false)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
 
   const incrementQuantity = () => setQuantity((prev) => prev + 1)
   const decrementQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
+
+  // Safely access variants with proper typing
+  const variants = product.variants?.[0] as ProductVariant | undefined
+
+  const handleAddToCart = async () => {
+    try {
+      setIsAddingToCart(true)
+      const result = await addToCartAction(product, quantity)
+      
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: `${product.name} has been added to your cart.`,
+        })
+      } else {
+        throw new Error(result.error)
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add product to cart. Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsAddingToCart(false)
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -29,13 +64,13 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       <div className="space-y-4">
         <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
           <img
-            src={product.images[0] || "/placeholder.svg"}
+            src={product.images?.[0] || "/placeholder.svg"}
             alt={product.name}
             className="w-full h-full object-cover"
           />
         </div>
         <div className="grid grid-cols-4 gap-4">
-          {product.images.map((image, index) => (
+          {product.images?.map((image, index) => (
             <div
               key={index}
               className={cn(
@@ -67,16 +102,16 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
           <div className="flex items-center gap-2 mb-4">
             <div className="flex">
-              {[...Array(Math.floor(product.rating))].map((_, i) => (
+              {[...Array(Math.floor(product.rating || 0))].map((_, i) => (
                 <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
               ))}
-              {product.rating % 1 !== 0 && <StarHalf className="h-5 w-5 fill-yellow-400 text-yellow-400" />}
-              {[...Array(5 - Math.ceil(product.rating))].map((_, i) => (
+              {(product.rating || 0) % 1 !== 0 && <StarHalf className="h-5 w-5 fill-yellow-400 text-yellow-400" />}
+              {[...Array(5 - Math.ceil(product.rating || 0))].map((_, i) => (
                 <Star key={i} className="h-5 w-5 text-gray-300" />
               ))}
             </div>
             <span className="text-sm text-gray-600">
-              {product.rating} ({product.reviewCount} reviews)
+              {product.rating || 0} ({product.reviewCount || 0} reviews)
             </span>
           </div>
           <div className="flex items-center gap-2 mb-4">
@@ -94,7 +129,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <Separator className="my-6" />
 
           {/* Product Options */}
-          {product.variants?.sizes?.length > 0 && (
+          {variants?.sizes && variants.sizes.length > 0 && (
             <div className="mb-6">
               <h3 className="font-semibold mb-2">Size</h3>
               <Select value={selectedSize} onValueChange={setSelectedSize}>
@@ -102,7 +137,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
-                  {product.variants.sizes.map((size) => (
+                  {variants.sizes.map((size: string) => (
                     <SelectItem key={size} value={size}>
                       {size}
                     </SelectItem>
@@ -112,7 +147,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             </div>
           )}
 
-          {product.variants?.colors?.length > 0 && (
+          {variants?.colors && variants.colors.length > 0 && (
             <div className="mb-6">
               <h3 className="font-semibold mb-2">Color</h3>
               <Select value={selectedColor} onValueChange={setSelectedColor}>
@@ -120,7 +155,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                   <SelectValue placeholder="Select color" />
                 </SelectTrigger>
                 <SelectContent>
-                  {product.variants.colors.map((color) => (
+                  {variants.colors.map((color: string) => (
                     <SelectItem key={color} value={color}>
                       {color}
                     </SelectItem>
@@ -151,9 +186,13 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
           {/* Add to Cart */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            <Button className="flex-1 bg-green-600 hover:bg-green-700">
+            <Button 
+              className="flex-1 bg-green-600 hover:bg-green-700"
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+            >
               <ShoppingCart className="h-5 w-5 mr-2" />
-              Add to Cart
+              {isAddingToCart ? "Adding..." : "Add to Cart"}
             </Button>
             <Button
               variant="outline"

@@ -1,15 +1,15 @@
 "use client"
 
-import { useState } from "react"
-import type { Product } from "@/types/product"
 import EnhancedProductCard from "@/components/enhanced-product-card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, SlidersHorizontal } from "lucide-react"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import type { Product } from "@/types/product"
+import { Search, SlidersHorizontal } from "lucide-react"
+import { useState } from "react"
 
 interface ProductListProps {
   products: Product[]
@@ -122,9 +122,9 @@ export default function ProductList({ products }: ProductListProps) {
       {/* Products Grid */}
       {sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sortedProducts.map((product) => (
+          {sortedProducts.map((product, index) => (
             <EnhancedProductCard
-              key={product.id}
+              key={`${product.id}-${index}`}
               id={product.id}
               name={product.name}
               price={product.price}

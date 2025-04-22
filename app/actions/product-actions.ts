@@ -1,5 +1,6 @@
 "use server"
 
+import { addToCart } from "@/lib/cart";
 import type { Product } from "@/types/product";
 
 export async function fetchProducts(url: string): Promise<Product[]> {
@@ -100,5 +101,17 @@ export async function fetchProductById(productId: string): Promise<Product | nul
   } catch (error) {
     console.error("Error fetching product:", error)
     return null
+  }
+}
+
+export async function addToCartAction(product: Product, quantity: number = 1) {
+  "use server"
+  
+  try {
+    const response = await addToCart(product, quantity);
+    return { success: true, data: response };
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    return { success: false, error: "Failed to add item to cart" };
   }
 }

@@ -14,6 +14,7 @@ export interface Product {
   isNew?: boolean
   isFeatured?: boolean
   rating?: number
+  reviewCount?: number
   campaignMessage?: string
   campaignRibbon?: string
   inStock?: boolean
